@@ -2,14 +2,28 @@
 // eslint-disable-next-line react/prop-types
 function ProductForm({ formData, setFormData, isEditing, onSubmit }) {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    const { name, value, files } = e.target;
+    if (name === "image" && files) {
+      setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
-    setFormData({ title: "", description: "", price: "", category:''});
+
+    const formDataWithImage = new FormData();
+    formDataWithImage.append("title", formData.title);
+    formDataWithImage.append("description", formData.description);
+    formDataWithImage.append("price", formData.price);
+    formDataWithImage.append("category", formData.category);
+    if (formData.image) {
+      formDataWithImage.append("image", formData.image);
+    }
+    console.log(formDataWithImage)
+    onSubmit(formDataWithImage);
+    setFormData({ title: "", description: "", price: "", category: "", image: null });
   };
 
   return (
@@ -51,6 +65,14 @@ function ProductForm({ formData, setFormData, isEditing, onSubmit }) {
         className="border p-2 mb-2 w-full"
         required
       />
+       <input
+        type="file"
+        name="image"
+        onChange={handleChange}
+        className="border p-2 mb-2 w-full"
+        accept="image/*"
+      />
+      
       <button type="submit" className="bg-gray-500 text-white p-2 rounded w-full mt-2">
         {isEditing ? "Update Product" : "Add Product"}
       </button>

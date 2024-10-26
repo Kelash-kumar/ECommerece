@@ -17,6 +17,10 @@ const productSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
+  image: {
+    data: Buffer,        // Buffer to store image data
+    contentType: String  // To store MIME type
+  }
 
 }, { timestamps: true });
 

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MdAddShoppingCart } from "react-icons/md";
 // eslint-disable-next-line react/prop-types
 const ProductCard = ({product}) => {
+  
   return (
     <motion.div
     className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg"

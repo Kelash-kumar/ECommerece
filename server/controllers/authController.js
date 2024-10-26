@@ -5,6 +5,8 @@ const generateToken = require("../utils/generateToken");
 exports.Register = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
+    const { image } = req.file;
+    console.log(image);
 
     if (!username || !email || !password || !role) {
       return res.status(400).json({ message: "Please enter all fields" });

@@ -3,6 +3,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const errorHandler = require("./utils/errorHandler");
 const cookieParser = require("cookie-parser");
+const fileUpload = require('express-fileupload');
 
 require("dotenv").config();
 
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use("/uploads", express.static("uploads"));
+app.use(fileUpload());
+
 
 app.use(
   cors({

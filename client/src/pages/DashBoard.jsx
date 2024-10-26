@@ -8,15 +8,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { setProducts } from '../redux/products/productSlice';
 
 function AdminDashboard() {
+
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const products = useSelector((state) => state.products.products); 
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    category: ""
+    category: "",
+    image:null
   });
+  
   const [isEditing, setIsEditing] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
 
@@ -40,10 +44,10 @@ function AdminDashboard() {
     try {
       const response = await axios.post(`${PRODUCT_API_END_POINT}/`, product, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          "Content-Type":"multipart/form-data"
         }
       });
-      console.log(response.data.Product)
       dispatch(setProducts([...products, response.data.Product])); 
     } catch (error) {
       console.error("Error adding product:", error.response.data.message);
