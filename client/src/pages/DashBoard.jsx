@@ -5,22 +5,21 @@ import Sidebar from "../components/Sidebar";
 import ProductForm from "../components/ProductForm";
 import ProductList from "../components/ProductList";
 import { useSelector, useDispatch } from "react-redux";
-import { setProducts } from '../redux/products/productSlice';
+import { setProducts } from "../redux/products/productSlice";
 
 function AdminDashboard() {
-
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const products = useSelector((state) => state.products.products); 
+  const products = useSelector((state) => state.products.products);
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
     category: "",
-    image:null
+    image: null,
   });
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
 
@@ -29,10 +28,10 @@ function AdminDashboard() {
       try {
         const response = await axios.get(`${PRODUCT_API_END_POINT}/`, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        dispatch(setProducts(response.data.products)); 
+        dispatch(setProducts(response.data.products));
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -45,10 +44,10 @@ function AdminDashboard() {
       const response = await axios.post(`${PRODUCT_API_END_POINT}/`, product, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type":"multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
-      dispatch(setProducts([...products, response.data.Product])); 
+      dispatch(setProducts([...products, response.data.Product]));
     } catch (error) {
       console.error("Error adding product:", error.response.data.message);
     }
@@ -61,12 +60,14 @@ function AdminDashboard() {
         product,
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const updatedProduct = response.data.product;
-      const updatedProducts = products.map((p) => (p._id === editProductId ? updatedProduct : p));
+      const updatedProducts = products.map((p) =>
+        p._id === editProductId ? updatedProduct : p
+      );
       dispatch(setProducts(updatedProducts));
       setIsEditing(false);
       setEditProductId(null);
@@ -79,10 +80,10 @@ function AdminDashboard() {
     try {
       await axios.delete(`${PRODUCT_API_END_POINT}/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      dispatch(setProducts(products.filter((product) => product._id !== id))); 
+      dispatch(setProducts(products.filter((product) => product._id !== id)));
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -91,7 +92,12 @@ function AdminDashboard() {
   const handleEdit = (product) => {
     setIsEditing(true);
     setEditProductId(product._id);
-    setFormData({ title: product.title, description: product.description, price: product.price, category: product.category });
+    setFormData({
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+    });
   };
 
   return (
@@ -105,7 +111,11 @@ function AdminDashboard() {
           isEditing={isEditing}
           onSubmit={isEditing ? updateProduct : addProduct}
         />
-        <ProductList products={products} onEdit={handleEdit} onDelete={deleteProduct} />
+        <ProductList
+          products={products}
+          onEdit={handleEdit}
+          onDelete={deleteProduct}
+        />
       </div>
     </div>
   );

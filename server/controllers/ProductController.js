@@ -1,40 +1,26 @@
 const Product = require("../model/Product.model");
 const errorHandler = require("../utils/errorHandler");
 const asyncHandler = require("../utils/asyncHandler");
+
 exports.GetAllProduct = asyncHandler(async (req, res, next) => {
   try {
     const products = await Product.find();
     if (!products) return next(new errorHandler(400, "No product exists"));
 
-    const productsWithBase64Images = products.map(product => {
+    const productsWithBase64Images = products.map((product) => {
       if (product.image && product.image.data) {
         const imageBase64 = product.image.data.toString("base64");
         return {
-          ...product.toObject(),  
-          image: `data:${product.image.contentType};base64,${imageBase64}`
+          ...product.toObject(),
+          image: `data:${product.image.contentType};base64,${imageBase64}`,
         };
-      } 
+      }
       return product;
     });
 
     res.status(200).json({
       message: "Products fetched successfully",
       products: productsWithBase64Images,
-    });
-  } catch (error) {
-    return next(new errorHandler(500, error.message));
-  }
-});
-
-
-exports.GetProduct = asyncHandler(async (req, res, next) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return next(new errorHandler(400, "No product exist"));
-
-    res.status(200).json({
-      message: "got successfully",
-      product,
     });
   } catch (error) {
     return next(new errorHandler(500, error.message));

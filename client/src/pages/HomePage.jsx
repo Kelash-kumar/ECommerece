@@ -4,16 +4,16 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import ProductCard from "../components/ProductCard";
 import { useSelector, useDispatch } from "react-redux";
-import { setProducts } from '../redux/products/productSlice';
+import { setProducts } from "../redux/products/productSlice";
 import SearchBar from "../components/SearchBar";
 
 function HomePage() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const products = useSelector((state) => state.products.products); 
-const [searchProductByName,setSearchProductByName] = useState('');
+  const products = useSelector((state) => state.products.products);
+  const [searchProductByName, setSearchProductByName] = useState("");
 
-useEffect(() => {
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${PRODUCT_API_END_POINT}/`, {
@@ -23,25 +23,27 @@ useEffect(() => {
           },
         });
 
-        dispatch(setProducts(response.data.products)); 
+        dispatch(setProducts(response.data.products));
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
 
     fetchProducts();
-  }, [dispatch, token]); 
+  }, [dispatch, token]);
 
-// search product by their name:
-const filteredProducts = products.filter(product =>    product.title.toLowerCase().includes(searchProductByName.toLowerCase()));
+  // search product by their name:
+  const filteredProducts = products.filter((product) =>
+    product.title.toLowerCase().includes(searchProductByName.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto p-4">
       <Navbar />
       <h1 className="text-3xl font-bold text-center my-6">Our Products</h1>
       <SearchBar
-       setSearchProductByName={setSearchProductByName}
-       searchProductByName={searchProductByName}
+        setSearchProductByName={setSearchProductByName}
+        searchProductByName={searchProductByName}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.length > 0 ? (

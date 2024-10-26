@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { MdAddShoppingCart } from "react-icons/md";
-// eslint-disable-next-line react/prop-types
 const ProductCard = ({product}) => {
   
   return (

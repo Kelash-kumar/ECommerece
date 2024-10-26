@@ -1,10 +1,7 @@
 import  { useState } from "react";
-import {USER_API_END_POINT} from '../constants/constants';
 import axios from "axios";
+import {USER_API_END_POINT} from '../constants/constants';
 import { useNavigate,Link } from "react-router-dom";
-
-
-
 
 function RegisterPage() {
 
