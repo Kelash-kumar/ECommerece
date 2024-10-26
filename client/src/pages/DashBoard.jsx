@@ -43,7 +43,8 @@ function AdminDashboard() {
           Authorization: `Bearer ${token}`
         }
       });
-      dispatch(setProducts([...products, response.data])); // Update Redux state
+      console.log(response.data.Product)
+      dispatch(setProducts([...products, response.data.Product])); 
     } catch (error) {
       console.error("Error adding product:", error.response.data.message);
     }

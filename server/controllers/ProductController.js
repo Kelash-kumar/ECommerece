@@ -35,6 +35,7 @@ exports.GetProduct = asyncHandler(async(req,res,next) => {
 exports.AddProduct = asyncHandler(async (req, res, next) => {
   try {
     const { title, description, price, category } = req.body;
+
     if (!title || !description || !price || !category) {
       return next(new errorHandler(400, "all fields are required "));
     }
@@ -51,10 +52,10 @@ exports.AddProduct = asyncHandler(async (req, res, next) => {
 exports.UpdateProduct = asyncHandler(async (req, res, next) => {
     try {
       const { title, description, price, category } = req.body;
-  
+      
       const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
-        { title, description, price, category },
+        { title, description, price, category},
         { new: true, runValidators: true } 
       );
   
