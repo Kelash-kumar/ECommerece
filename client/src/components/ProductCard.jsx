@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { MdAddShoppingCart } from "react-icons/md";
 // eslint-disable-next-line react/prop-types
 const ProductCard = ({product}) => {
-  // console.log(product.product)
   return (
     <motion.div
     className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg"
@@ -10,7 +9,7 @@ const ProductCard = ({product}) => {
     whileTap={{ scale: 0.95 }}
   >
     <img
-      src={product.image || "placeholder-image.jpg"} // Use product image or placeholder
+      src={product.image || "placeholder-image.jpg"} 
       alt={product.title}
       className="h-40 w-full object-cover rounded-md "
     />

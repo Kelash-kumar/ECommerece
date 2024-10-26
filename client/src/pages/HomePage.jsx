@@ -10,7 +10,7 @@ import SearchBar from "../components/SearchBar";
 function HomePage() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const products = useSelector((state) => state.products.products); // Get products from Redux state
+  const products = useSelector((state) => state.products.products); 
 const [searchProductByName,setSearchProductByName] = useState('');
 
 useEffect(() => {

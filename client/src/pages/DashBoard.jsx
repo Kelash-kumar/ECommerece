@@ -10,7 +10,7 @@ import { setProducts } from '../redux/products/productSlice';
 function AdminDashboard() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const products = useSelector((state) => state.products.products); // Get products from Redux state
+  const products = useSelector((state) => state.products.products); 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -63,7 +63,7 @@ function AdminDashboard() {
       );
       const updatedProduct = response.data.product;
       const updatedProducts = products.map((p) => (p._id === editProductId ? updatedProduct : p));
-      dispatch(setProducts(updatedProducts)); // Update Redux state
+      dispatch(setProducts(updatedProducts));
       setIsEditing(false);
       setEditProductId(null);
     } catch (error) {

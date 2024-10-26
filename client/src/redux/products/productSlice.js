@@ -15,7 +15,7 @@ const productSlice = createSlice({
       state.products = action.payload;
     },
     updateProduct: (state, action) => {
-      const index = state.products.findIndex((product) => product._id === action.payload._id); // Use _id if that's your unique identifier
+      const index = state.products.findIndex((product) => product._id === action.payload._id); 
       if (index !== -1) {
         state.products[index] = action.payload; 
       }
